@@ -1,0 +1,157 @@
+<%= form_with scope: :user, url: root_url do |f| %>
+  <fieldset>
+    <legend>Default Configuration</legend>
+
+    <p>
+      <%= f.label :country_code, "Default Config" %>
+      <%= f.country_select :country_code %>
+      <br>
+      <code class='code-sample'>f.country_select :country_code</code>
+    </p>
+
+    <p>
+      <%= f.label :country_code, "With Priority Countries" %>
+      <%= f.country_select :country_code, priority_countries: ["GB", "US", "LV"] %>
+      <br>
+      <code class='code-sample'>f.country_select :country_code, priority_countries: ["GB", "US", "LV"]</code>
+    </p>
+
+    <p>
+      <%= f.label :country_code, "With Priority Countries in the provided order" %>
+      <%= f.country_select :country_code, priority_countries: ["GB", "US", "LV"], sort_provided: false %>
+      <br>
+      <code class='code-sample'>f.country_select :country_code, priority_countries: ["GB", "US", "LV"]</code>
+    </p>
+
+    <p>
+      <%= f.label :country_code, "With Prompt" %>
+      <%= f.country_select :country_code, priority_countries: ["GB", "US"], prompt: "Select a Country" %>
+      <br>
+      <code class='code-sample'>f.country_select :country_code, priority_countries: ["GB", "US"], prompt: "Select a Country"</code>
+    </p>
+
+    <p>
+      <%= f.label :country_code, "Including a blank selection" %>
+      <%= f.country_select :country_code, priority_countries: ["GB", "US"], include_blank: true %>
+      <br>
+      <code class='code-sample'>f.country_select :country_code, priority_countries: ["GB", "US"], include_blank: true</code>
+    </p>
+
+    <p>
+      <%= f.label :country_code, "Adding HTML attributes" %>
+      <%= f.country_select :country_code, { priority_countries: ["GB", "US"] }, class: 'required-field', required: true %>
+      <br>
+      <code class='code-sample'>f.country_select :country_code, { priority_countries: ["GB", "US"] }, class: 'required-field', required: true </code>
+    </p>
+  </fieldset>
+
+  <fieldset>
+    <legend>With I18n Support (<code>I18n.locale = :es</code>)</legend>
+
+    <% I18n.with_locale(:es) do %>
+      <p>
+        <%= f.label :country_code %>
+        <%= f.country_select :country_code %>
+        <br>
+        <code class='code-sample'>f.country_select :country_code</code>
+      </p>
+
+      <p>
+        <%= f.label :country_code, "With Priority Countries" %>
+        <%= f.country_select :country_code, priority_countries: ["GB", "US"] %>
+        <br>
+        <code class='code-sample'>f.country_select :country_code, priority_countries: ["GB", "US"]</code>
+      </p>
+    <% end %>
+  </fieldset>
+
+  <fieldset>
+    <legend>With Only Chosen Countries</legend>
+
+    <p>
+      <%= f.label :country_code, "Chosen Countries" %>
+      <%= f.country_select :country_code, only: ["SG","LV"] %>
+      <br>
+      <code class='code-sample'>f.country_select :country_code, only: ["SG","LV"]</code>
+    </p>
+
+    <p>
+      <%= f.label :country_code, "Chosen Countries in the provided order" %>
+      <%= f.country_select :country_code, only: ["SG","LV"], sort_provided: false %>
+      <br>
+      <code class='code-sample'>f.country_select :country_code, only: ["SG","LV"], sort_provided: false</code>
+    </p>
+
+    <p>
+      <%= f.label :country_code, "With Priority Countries" %>
+      <%= f.country_select :country_code, only: ["US"], priority_countries: ["GB", "US"] %>
+      <br>
+      <code class='code-sample'>f.country_select :country_code, only: ["US"], priority_countries: ["GB", "US"]</code>
+    </p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Excluding Countries</legend>
+
+    <p>
+      <%= f.label :country_code, "Excluding Latvia and Signapore" %>
+      <%= f.country_select :country_code, except: ["LV","SG"] %>
+      <br>
+      <code class='code-sample'>f.country_select :country_code, except: ["LV","SG"]</code>
+    </p>
+
+    <p>
+      <%= f.label :country_code, "With Priority Countries" %>
+      <%= f.country_select :country_code, except: ["US"], priority_countries: ["GB", "US"] %>
+      <br>
+      <code class='code-sample'>f.country_select :country_code, except: ["US"], priority_countries: ["GB", "US"]</code>
+    </p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Without Form Object</legend>
+    <p>
+      <%= country_select("address", "country", only: ["GB", "FR", "DE"]) %>
+      <br>
+      <code class='code-sample'>country_select("address", "country", only: ["GB", "FR", "DE"])</code>
+    </p>
+    <p>
+      <%= country_select(nil, "country", only: ["GB", "FR", "DE"]) %>
+      <br>
+      <code class='code-sample'>country_select(nil, "country", only: ["GB", "FR", "DE"])</code>
+    </p>
+  </fieldset>
+
+  <fieldset>
+    <legend>Using a custom formatter</legend>
+    <p>Custom formatters can be defined in an initializer to fully customize <code>option</code> tags.</p>
+    <p>
+<pre><code class='code-sample'>CountrySelect::FORMATS[:with_alpha2] = lambda do |country|
+  "#{country.iso_short_name} (#{country.alpha2})"
+end</code></pre>
+    <p>
+      <%= f.label :country_code, "Using Custom Alpha2 Formatter" %>
+      <%= f.country_select :country_code,  format: :with_alpha2 %>
+      <br>
+      <code class='code-sample'>f.country_select :country_code,  format: :with_alpha2</code>
+    </p>
+    <hr />
+    <p>
+<pre><code class='code-sample'>CountrySelect::FORMATS[:with_data_attrs] = lambda do |country|
+  [
+    country.iso_short_name,
+    country.alpha2,
+    {
+      'data-country-code' => country.country_code,
+      'data-alpha3' => country.alpha3
+    }
+  ]
+end</code></pre>
+    <p>
+      <%= f.label :country_code, "Using Custom Option Formatter With HTML <code>data</code> attributes".html_safe %>
+      <%= f.country_select :country_code,  format: :with_data_attrs %>
+      <br>
+      <code class='code-sample'>f.country_select :country_code,  format: :with_data_attrs</code>
+    </p>
+  </fieldset>
+<% end %>

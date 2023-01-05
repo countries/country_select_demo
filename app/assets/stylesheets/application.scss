@@ -1,0 +1,44 @@
+body {
+  background: #eee;
+}
+
+fieldset {
+  margin: 1rem 0;
+}
+
+label {
+  margin-right: 0.5rem;
+}
+
+.input {
+  margin-top: 1rem;
+}
+
+code {
+  background: #ccc;
+  &.code-sample {
+    display: block;
+    padding: 0.25rem;
+    margin-top: 0.25rem;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #22272E;
+    color: #ADBAC7;
+  }
+
+  code {
+    background: rgba(99, 110, 123, 0.4);;
+  }
+
+  select {
+    background: #333;
+    color: #ADBAC7;
+  }
+
+  a {
+    color: #539bf5;
+  }
+}
