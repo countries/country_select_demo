@@ -1,17 +1,17 @@
 source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby "3.2.2"
+ruby "3.4.3"
 
-gem "rails", "~> 7.0.4"
+gem "rails", "~> 8.0.0"
 
-gem "puma", "~> 6.0"
+gem "puma", "~> 6.4"
 
 gem "bootsnap", require: false
 
 gem "importmap-rails"
 gem "sprockets-rails"
-gem 'dartsass-rails', '~> 0.4.0'
+gem 'dartsass-rails', '~> 0.5.0'
 
 gem 'country_select'
 
